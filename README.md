@@ -17,17 +17,21 @@ ghcr.io/jaerinx/dsc180a-ma5-docker-image
 
 Base image: `ghcr.io/ucsd-ets/datascience-notebook:2023.4-notebook7`
 
-## Build locally
+## Build and publish
 
-Requires [Docker Desktop](https://www.docker.com/products/docker-desktop/).
+This repo uses GitHub Actions (`.github/workflows/docker-publish.yml`) to build the
+image and push it to GHCR on every push to `main`.
+
+After the first successful workflow run, make the package **public**:
+
+GitHub → profile → Packages → `dsc180a-ma5-docker-image` → Package settings → Change visibility → Public.
+
+### Build locally (optional)
+
+Requires [Docker Desktop](https://www.docker.com/products/docker-desktop/) with WSL2.
 
 ```bash
 docker build -t dsc180a-ma5-docker-image .
-```
-
-## Test locally
-
-```bash
 docker run --rm -it dsc180a-ma5-docker-image
 ```
 
@@ -39,19 +43,6 @@ which nmap
 which traceroute
 python -c "import geopandas, babypandas; print('ok')"
 ```
-
-## Push to GHCR
-
-```bash
-# create a classic PAT with write:packages, delete:packages, read:packages
-export CR_PAT=<your_token>
-echo $CR_PAT | docker login ghcr.io -u jaerinx --password-stdin
-
-docker tag dsc180a-ma5-docker-image ghcr.io/jaerinx/dsc180a-ma5-docker-image
-docker push ghcr.io/jaerinx/dsc180a-ma5-docker-image
-```
-
-After pushing, make the package **public** under GitHub → Packages → Package settings.
 
 ## Use on DSMLP
 
